@@ -16,3 +16,8 @@
   https://api.api-ninjas.com/v1/holidays  
   https://api.api-ninjas.com/v1/covid19
 - All application logic is implemented on the server side. The ejs engine was used to display the content.
+
+## Deployment
+
+- The application is deployed using the service render.com
+- https://grents-assignment-3.onrender.com
