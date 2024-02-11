@@ -41,6 +41,7 @@
         margin-top: 5%;
         text-align: center;
         height: 100%;
+        margin-bottom: 5%;
       }
       h1 {
         margin-bottom: 50px;
@@ -52,7 +53,7 @@
         height: 30px;
         width: 30%;
       }
-      
+
       footer {
         display: flex;
         font-family: "Roboto Mono", monospace;
@@ -94,19 +95,20 @@
         color: inherit;
       }
       table {
-            border-collapse: collapse;
-            width: 80%;
-            margin: 0 auto;
-            margin-bottom: 200px;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2; 
-        }
+        border-collapse: collapse;
+        width: 80%;
+        margin: 0 auto;
+        margin-bottom: 200px;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
       @media only screen and (max-width: 700px) {
         body {
           font-size: 14px;
@@ -120,52 +122,63 @@
         <a href="/home"> <h2>ASSIGNMENT 3</h2> </a>
       </header>
       <main>
-        
         <h1>ADMIN PANEL</h1>
-        <div id="addUser" class="wrap-form">    
-            <form action="/admin/users/add" method="post">
-           <label for="username">Username:</label>
-           <input type="text" id="username" name="username" placeholder="Enter username" required>
-           <label for="password">Password:</label>
-           <input type="password" id="password" name="password" placeholder="Enter password" required>
-           <button type="submit">Add User</button>
-       </form>
-   </div>
-    <table>
-        <thead>
+        <div id="addUser" class="wrap-form">
+          <form action="/admin/users/add" method="post">
+            <label for="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Enter username"
+              required
+            />
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter password"
+              required
+            />
+            <button type="submit">Add User</button>
+          </form>
+        </div>
+        <table>
+          <thead>
             <tr>
-                <th>Username</th>
-                <th>Creation Date</th>
-                <th>Update Date</th>
-                <th>Admin Status</th>
-                <th>Delete</th>
+              <th>Username</th>
+              <th>Creation Date</th>
+              <th>Update Date</th>
+              <th>Admin Status</th>
+              <th>Delete</th>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             <% users.forEach(user => { %>
-                <tr>
-                    <td><%= user.username %></td>
-                    <td><%= user.createdAt %></td>
-                    <td><%= user.updatedAt %></td>
-                    <td><%= user.isAdmin ? 'Yes' : 'No' %></td>
-                    <td>
-                        <form action="/admin/users/<%= user._id %>/delete" method="post">
-                            <button class="delete-button" type="submit">Delete</button>
-                        </form>
-                    </td>
-                </tr>
+            <tr>
+              <td><%= user.username %></td>
+              <td><%= user.createdAt %></td>
+              <td><%= user.updatedAt %></td>
+              <td><%= user.isAdmin ? 'Yes' : 'No' %></td>
+              <td>
+                <form
+                  action="/admin/users/<%= user._id %>/delete"
+                  method="post"
+                >
+                  <button class="delete-button" type="submit">Delete</button>
+                </form>
+              </td>
+            </tr>
             <% }); %>
-        </tbody>
-    </table>
-
-
+          </tbody>
+        </table>
+      </main>
 
       <!-- <footer>
         <h2>Artem Grents</h2>
         <h3>SE-2205</h3>
       </footer> -->
     </div>
-
-    
   </body>
 </html>

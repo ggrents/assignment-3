@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const User = require("./entities/user");
 const bcrypt = require("bcryptjs");
 const adminRoutes = require("./adminRoutes");
+const request = require("request");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -41,6 +42,31 @@ app.get("/admin", async (req, res) => {
   }
 });
 
+app.get("/holidays", (req, res) => {
+  const country = "Kazakhstan";
+  const year = req.query.year || new Date().getFullYear(); // По умолчанию текущий год
+  const apiKey = "bG/ihNFebjjUh5fQeZseCw==OFnRunQwztiKgww2";
+  const url = `https://api.api-ninjas.com/v1/holidays?country=${country}&year=${year}&type=public_holiday`;
+
+  request.get(
+    {
+      url: url,
+      headers: {
+        "X-Api-Key": apiKey,
+      },
+    },
+    function (error, response, body) {
+      if (error) {
+        console.error("Request failed:", error);
+        res.status(500).send("Failed to fetch holidays data");
+      } else {
+        const holidays = JSON.parse(body);
+        res.render("holidays", { holidays: holidays });
+      }
+    }
+  );
+});
+
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
 
@@ -69,6 +95,30 @@ app.post("/register", async (req, res) => {
 
 app.get("/register", (req, res) => {
   res.render("register");
+});
+
+app.get("/covid", (req, res) => {
+  const country = "kazakhstan";
+  const apiKey = "bG/ihNFebjjUh5fQeZseCw==OFnRunQwztiKgww2";
+
+  const options = {
+    url: `https://api.api-ninjas.com/v1/covid19?country=${country}`,
+    headers: {
+      "X-Api-Key": apiKey,
+    },
+  };
+
+  request.get(options, (error, response, body) => {
+    if (error) {
+      console.error("Request failed:", error);
+      res.status(500).send("Request failed");
+      return;
+    }
+
+    const data = JSON.parse(body);
+
+    res.render("covid", { data });
+  });
 });
 
 app.post("/login", async (req, res) => {

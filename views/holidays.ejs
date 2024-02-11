@@ -1,0 +1,166 @@
+<!-- register.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Roboto+Mono:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <title>Registration</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        font-family: "Roboto Mono", monospace;
+      }
+      .wrapper {
+        min-height: 100%;
+        position: relative;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      table {
+        width: 80%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+        background-color: #fff;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      tr:hover {
+        background-color: #f2f2f2;
+      }
+      header {
+        font-family: "Roboto Mono", monospace;
+        align-items: center;
+        font-size: 2rem;
+        height: 100px;
+        background-color: #001e2b;
+        color: #00ed64;
+        display: flex;
+        justify-content: center;
+      }
+      main {
+        margin-top: 5%;
+        text-align: center;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      h1 {
+        margin-bottom: 50px;
+      }
+
+      input {
+        height: 30px;
+        width: 30%;
+      }
+      .wrapper-home {
+        margin: 10px 2% 10px 2%;
+        display: grid;
+        grid-template-columns: 30% 30%;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .wrapper-home div {
+        border: 1px solid black;
+      }
+      footer {
+        display: flex;
+        font-family: "Roboto Mono", monospace;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #001e2b;
+        color: #00ed64;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      .field {
+        margin-bottom: 10px;
+      }
+
+      button {
+        background-color: #001e2b;
+        color: #00ed64;
+        font-size: 20px;
+        cursor: pointer;
+        width: 10%;
+        border: 1px solid black;
+        border-radius: 10px;
+        height: 30px;
+      }
+
+      button:hover {
+        background-color: #00ed64;
+        color: #001e2b;
+      }
+
+      @media only screen and (max-width: 700px) {
+        body {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <a href="/home"> <h2>ASSIGNMENT 3</h2> </a>
+      </header>
+      <main>
+        <h1>Kazakhstan Holidays</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Day of the Week</th>
+              <th>Holiday Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% holidays.forEach(holiday => { %>
+            <tr>
+              <td><%= holiday.date %></td>
+              <td><%= holiday.day %></td>
+              <td><%= holiday.name %></td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </main>
+    </div>
+  </body>
+</html>
