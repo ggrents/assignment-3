@@ -1,0 +1,171 @@
+<!-- register.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Roboto+Mono:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <title>Registration</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        font-family: "Roboto Mono", monospace;
+      }
+      .wrapper {
+        min-height: 100%;
+        position: relative;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        font-family: "Roboto Mono", monospace;
+        align-items: center;
+        font-size: 2rem;
+        height: 100px;
+        background-color: #001e2b;
+        color: #00ed64;
+        display: flex;
+        justify-content: center;
+      }
+      main {
+        margin-top: 5%;
+        text-align: center;
+        height: 100%;
+      }
+      h1 {
+        margin-bottom: 50px;
+      }
+      #addUser {
+        margin: 0 0 100px 0;
+      }
+      input {
+        height: 30px;
+        width: 30%;
+      }
+      
+      footer {
+        display: flex;
+        font-family: "Roboto Mono", monospace;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #001e2b;
+        color: #00ed64;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      }
+
+      .field {
+        margin-bottom: 10px;
+      }
+
+      button {
+        background-color: #001e2b;
+        color: #00ed64;
+        font-size: 20px;
+        cursor: pointer;
+        width: 10%;
+        border: 1px solid black;
+        border-radius: 10px;
+        height: 30px;
+      }
+
+      button:hover {
+        background-color: #00ed64;
+        color: #001e2b;
+      }
+      .delete-button {
+        width: 100%;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 0 auto;
+            margin-bottom: 200px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2; 
+        }
+      @media only screen and (max-width: 700px) {
+        body {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <a href="/home"> <h2>ASSIGNMENT 3</h2> </a>
+      </header>
+      <main>
+        
+        <h1>ADMIN PANEL</h1>
+        <div id="addUser" class="wrap-form">    
+            <form action="/admin/users/add" method="post">
+           <label for="username">Username:</label>
+           <input type="text" id="username" name="username" placeholder="Enter username" required>
+           <label for="password">Password:</label>
+           <input type="password" id="password" name="password" placeholder="Enter password" required>
+           <button type="submit">Add User</button>
+       </form>
+   </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Creation Date</th>
+                <th>Update Date</th>
+                <th>Admin Status</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach(user => { %>
+                <tr>
+                    <td><%= user.username %></td>
+                    <td><%= user.createdAt %></td>
+                    <td><%= user.updatedAt %></td>
+                    <td><%= user.isAdmin ? 'Yes' : 'No' %></td>
+                    <td>
+                        <form action="/admin/users/<%= user._id %>/delete" method="post">
+                            <button class="delete-button" type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+
+
+      <!-- <footer>
+        <h2>Artem Grents</h2>
+        <h3>SE-2205</h3>
+      </footer> -->
+    </div>
+
+    
+  </body>
+</html>
