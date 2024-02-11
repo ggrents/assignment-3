@@ -21,3 +21,5 @@
 
 - The application is deployed using the service render.com
 - https://grents-assignment-3.onrender.com
+  
+(!!!) Due to the free subscription plan on this resource, the first connection to my application may take some time.
