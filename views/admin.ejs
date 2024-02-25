@@ -28,14 +28,42 @@
         padding: 0;
       }
       header {
-        font-family: "Roboto Mono", monospace;
-        align-items: center;
         font-size: 2rem;
         height: 100px;
         background-color: #001e2b;
         color: #00ed64;
+      }
+
+      .nav-items {
         display: flex;
-        justify-content: center;
+        gap: 30px;
+        font-size: 1.5rem;
+        font-family: "Montserrat", sans-serif;
+      }
+
+      button {
+        color: #001e2b;
+        background-color: #00ed64;
+        width: 100px;
+        font-size: 1rem;
+        cursor: pointer;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 400;
+      }
+      nav {
+        margin: 0 20px 0 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 400px;
+      }
+      .logo {
+        font-family: "Bowlby One SC", sans-serif;
+        font-weight: 400;
+        opacity: 0.8;
+      }
+      nav h3 {
+        font-size: 4rem;
       }
       main {
         margin-top: 5%;
@@ -71,20 +99,9 @@
         margin-bottom: 10px;
       }
 
-      button {
+      button:hover {
         background-color: #001e2b;
         color: #00ed64;
-        font-size: 20px;
-        cursor: pointer;
-        width: 10%;
-        border: 1px solid black;
-        border-radius: 10px;
-        height: 30px;
-      }
-
-      button:hover {
-        background-color: #00ed64;
-        color: #001e2b;
       }
       .delete-button {
         width: 100%;
@@ -106,6 +123,16 @@
         padding: 8px;
         text-align: center;
       }
+      .edit-button {
+        background-color: #001e2b;
+        color: #00ed64;
+        width: 60px;
+      }
+
+      .edit-button:hover {
+        color: #001e2b;
+        background-color: #00ed64;
+      }
       th {
         background-color: #f2f2f2;
       }
@@ -119,7 +146,20 @@
   <body>
     <div class="wrapper">
       <header>
-        <a href="/home"> <h2>ASSIGNMENT 3</h2> </a>
+        <nav>
+          <div class="logo">
+            <a href="/home">
+              <h3>CS</h3>
+            </a>
+          </div>
+
+          <div class="nav-items">
+            <div class="nav-item">Notes</div>
+            <div class="nav-item">Recipes</div>
+            <div class="nav-item">Cocktails</div>
+            <div class="nav-item">Profile</div>
+          </div>
+        </nav>
       </header>
       <main>
         <h1>ADMIN PANEL</h1>
@@ -151,6 +191,7 @@
               <th>Creation Date</th>
               <th>Update Date</th>
               <th>Admin Status</th>
+              <th>Edit</th>
               <th>Delete</th>
             </tr>
           </thead>
@@ -161,6 +202,30 @@
               <td><%= user.createdAt %></td>
               <td><%= user.updatedAt %></td>
               <td><%= user.isAdmin ? 'Yes' : 'No' %></td>
+              <td>
+                <form
+                  id="editForm-<%= user._id %>"
+                  action="/admin/users/<%= user._id %>/update"
+                  method="post"
+                >
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="username"
+                    form="editForm-<%= user._id %>"
+                    required
+                  />
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="password"
+                    form="editForm-<%= user._id %>"
+                    required
+                  />
+
+                  <button class="edit-button" type="submit">Edit</button>
+                </form>
+              </td>
               <td>
                 <form
                   action="/admin/users/<%= user._id %>/delete"
@@ -174,11 +239,6 @@
           </tbody>
         </table>
       </main>
-
-      <!-- <footer>
-        <h2>Artem Grents</h2>
-        <h3>SE-2205</h3>
-      </footer> -->
     </div>
   </body>
 </html>

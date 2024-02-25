@@ -12,12 +12,18 @@
       href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Roboto+Mono:wght@600&display=swap"
       rel="stylesheet"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     <title>Registration</title>
     <style>
       html,
       body {
         height: 100%;
-        font-family: "Roboto Mono", monospace;
+        font-family: "Montserrat", sans-serif;
       }
       .wrapper {
         min-height: 100%;
@@ -28,15 +34,12 @@
         padding: 0;
       }
       header {
-        font-family: "Roboto Mono", monospace;
-        align-items: center;
         font-size: 2rem;
         height: 100px;
         background-color: #001e2b;
         color: #00ed64;
-        display: flex;
-        justify-content: center;
       }
+
       main {
         margin-top: 5%;
         text-align: center;
@@ -67,24 +70,46 @@
         margin-bottom: 10px;
       }
 
-      button {
-        background-color: #001e2b;
-        color: #00ed64;
-        font-size: 20px;
-        cursor: pointer;
-        width: 10%;
-        border: 1px solid black;
-        border-radius: 10px;
-        height: 30px;
+      .nav-items {
+        display: flex;
+        gap: 30px;
+        font-size: 1.5rem;
+        font-family: "Montserrat", sans-serif;
       }
+
+      button {
+        color: #001e2b;
+        background-color: #00ed64;
+        width: 100px;
+        font-size: 1rem;
+        cursor: pointer;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 400;
+      }
+      nav {
+        margin: 0 20px 0 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 400px;
+      }
+      .logo {
+        font-family: "Bowlby One SC", sans-serif;
+        font-weight: 400;
+        opacity: 0.8;
+      }
+      nav h3 {
+        font-size: 4rem;
+      }
+
       a {
         text-decoration: none;
         color: inherit;
       }
 
       button:hover {
-        background-color: #00ed64;
-        color: #001e2b;
+        background-color: #001e2b;
+        color: #00ed64;
       }
 
       @media only screen and (max-width: 700px) {
@@ -97,7 +122,20 @@
   <body>
     <div class="wrapper">
       <header>
-        <a href="/home"> <h2>ASSIGNMENT 3</h2> </a>
+        <nav>
+          <div class="logo">
+            <a href="/home">
+              <h3>CS</h3>
+            </a>
+          </div>
+
+          <div class="nav-items">
+            <div class="nav-item">Notes</div>
+            <div class="nav-item">Recipes</div>
+            <div class="nav-item">Cocktails</div>
+            <div class="nav-item">Profile</div>
+          </div>
+        </nav>
       </header>
       <main>
         <h1>REGISTRATION</h1>
@@ -122,7 +160,7 @@
             />
           </div>
           <br />
-          <button type="submit">Register</button>
+          <button type="submit">SIGN UP</button>
         </form>
       </main>
 

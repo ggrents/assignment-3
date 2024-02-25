@@ -33,4 +33,21 @@ router.post("/:userId/delete", async (req, res) => {
   }
 });
 
+router.post("/:userId/update", async (req, res) => {
+  const userId = req.params.userId;
+  const { username, password } = req.body;
+
+  try {
+    const currentDate = new Date();
+    await User.findByIdAndUpdate(userId, {
+      username,
+      password,
+      updatedAt: currentDate,
+    });
+    res.redirect("/admin");
+  } catch (error) {
+    console.error("Ошибка при обновлении пользователя:", error);
+    res.status(500).send("Ошибка при обновлении пользователя");
+  }
+});
 module.exports = router;

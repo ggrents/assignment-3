@@ -3,16 +3,30 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const User = require("./entities/user");
 const bcrypt = require("bcryptjs");
+const session = require("express-session");
 const adminRoutes = require("./adminRoutes");
 const request = require("request");
 const path = require("path");
 
 const app = express();
+app.use(
+  session({
+    secret: "secret-key",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.set("view engine", "ejs");
-
+const checkAdmin = (req, res, next) => {
+  if (req.session.username === "artem") {
+    next();
+  } else {
+    res.redirect("/home");
+  }
+};
 mongoose
   .connect(
     "mongodb+srv://gggrents:RPFWKZoABcOLS9rl@assignment-3.wblfoqa.mongodb.net/?retryWrites=true&w=majority",
@@ -27,14 +41,15 @@ mongoose
 app.use("/admin/users", adminRoutes);
 
 app.get("/", (req, res) => {
-  res.redirect("/register");
+  res.redirect("/home");
 });
 
 app.get("/home", (req, res) => {
-  res.render("home");
+  const isAuth = req.session.username;
+  res.render("home", { isAuth });
 });
 
-app.get("/admin", async (req, res) => {
+app.get("/admin", checkAdmin, async (req, res) => {
   try {
     const users = await User.find();
 
@@ -77,7 +92,7 @@ app.post("/register", async (req, res) => {
     const existingUser = await User.findOne({ username });
 
     if (existingUser) {
-      return res.status(400).send("Пользователь с таким именем уже существует");
+      return res.status(400).send("A user with that name already exists");
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -129,6 +144,7 @@ app.post("/login", async (req, res) => {
 
   try {
     if (username === "artem" && password === "grents") {
+      req.session.username = username;
       return res.redirect("/admin");
     }
 
@@ -138,6 +154,7 @@ app.post("/login", async (req, res) => {
       const passwordMatch = await bcrypt.compare(password, user.password);
 
       if (passwordMatch) {
+        req.session.username = username;
         return res.redirect("/home");
       }
     }

@@ -18,7 +18,7 @@
       href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
-    <title>Registration</title>
+    <title>Home</title>
     <style>
       html,
       body {
@@ -113,7 +113,10 @@
       nav h3 {
         font-size: 4rem;
       }
-
+      button:hover {
+        background-color: #001e2b;
+        color: #00ed64;
+      }
       .main-component {
         background-color: #001e2b;
         color: #00ed64;
@@ -159,13 +162,16 @@
       <header>
         <nav>
           <div class="logo">
-            <h3>CS</h3>
+            <a href="/home">
+              <h3>CS</h3>
+            </a>
           </div>
 
           <div class="nav-items">
+            <div class="nav-item">Notes</div>
             <div class="nav-item">Recipes</div>
             <div class="nav-item">Cocktails</div>
-            <div class="nav-item">About</div>
+            <div class="nav-item">Profile</div>
           </div>
         </nav>
       </header>
@@ -181,10 +187,17 @@
               the world of taste and pleasure!
             </p>
           </div>
+
+          <% if (isAuth) { %>
           <div class="buttons">
-            <button>JOIN US</button>
-            <button>SIGN IN</button>
+            <a href="/create"><button>CREATE</button></a>
           </div>
+          <% } else { %>
+          <div class="buttons">
+            <a href="/register"><button>JOIN US</button></a>
+            <a href="/login"><button>SIGN IN</button></a>
+          </div>
+          <% } %>
         </div>
 
         <img src="<%= '/cook.png' %>" alt="dsadsa" />
