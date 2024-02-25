@@ -5,9 +5,12 @@ const User = require("./entities/user");
 const bcrypt = require("bcryptjs");
 const adminRoutes = require("./adminRoutes");
 const request = require("request");
+const path = require("path");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
+
 app.set("view engine", "ejs");
 
 mongoose
