@@ -1,11 +1,8 @@
-# ASSIGNMENT 3
+# Assignment 4. Final Project
 ## Grents Artem SE-2205
 - git clone 
-
 - npm install
-
 - node server.js
-
 - go to http://localhost:3000
 
 
