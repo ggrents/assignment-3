@@ -5,6 +5,7 @@ const User = require("./entities/user");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const adminRoutes = require("./adminRoutes");
+const recipeRoutes = require("./recipeRoutes");
 const request = require("request");
 const path = require("path");
 
@@ -39,9 +40,14 @@ mongoose
   .catch((err) => console.error("Ошибка подключения к MongoDB:", err));
 
 app.use("/admin/users", adminRoutes);
+app.use("/recipes", recipeRoutes);
 
 app.get("/", (req, res) => {
   res.redirect("/home");
+});
+
+app.get("/profile", (req, res) => {
+  res.render("profile");
 });
 
 app.get("/home", (req, res) => {
@@ -113,6 +119,10 @@ app.post("/register", async (req, res) => {
 
 app.get("/register", (req, res) => {
   res.render("register");
+});
+
+app.get("/create", (req, res) => {
+  res.render("create");
 });
 
 app.get("/covid", (req, res) => {
