@@ -9,10 +9,16 @@
 ## Key Features
 - The registration and login functionalities for users have been implemented on the respective register and login routes.
 - Upon entering the credentials: username: "artem", password: "grents", you will be redirected to the admin panel ("/admin"), where you can monitor and manage users in various ways.
-- On the "/home" page, there is a navigation menu with two routes that utilize APIs:  
-  https://api.api-ninjas.com/v1/holidays  
-  https://api.api-ninjas.com/v1/covid19
+- In the footer there is a navigation menu with two routes that utilize APIs:  
+  https://api.api-ninjas.com/v1/recipe
+  https://api.api-ninjas.com/v1/cocktail
+- On the recipes and cocktails pages, users can use keywords to find entries they are interested in
+- On the profile page, the user can view their notes, as well as perform all CRUD operations on them.
+- To identify the current user, sessions are used, which are issued at login and expire when the browser is closed
+- The application uses logic to verify whether the user is authenticated to issue the relevant content.
+- Also, for the security of the admin panel, a middleware is used, which checks whether the current user is an admin
 - All application logic is implemented on the server side. The ejs engine was used to display the content.
+  
 
 ## Deployment
 
