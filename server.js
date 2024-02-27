@@ -49,12 +49,23 @@ app.get("/", (req, res) => {
 
 app.get("/profile", async (req, res) => {
   try {
-    const recipes = await Recipe.find({});
+    const username = req.session.username;
+    if (!username) {
+      return res.redirect("/home");
+    }
 
+    let recipes;
+    if (username === "artem") {
+      recipes = await Recipe.find({ title: { $ne: "" } });
+    } else {
+      recipes = await Recipe.find({ username: username, title: { $ne: "" } });
+    }
+
+    console.log(recipes[0]);
     res.render("profile", { recipes: recipes });
   } catch (error) {
-    console.error("Error fetching recipes:", error);
-    res.status(500).json({ error: "Error fetching recipes" });
+    console.error("Ошибка при получении рецептов:", error);
+    res.redirect("/home");
   }
 });
 
@@ -212,6 +223,21 @@ app.post("/login", async (req, res) => {
   } catch (error) {
     console.error("Ошибка при входе пользователя:", error);
     res.status(500).send("Ошибка при входе пользователя");
+  }
+});
+
+app.get("/logout", (req, res) => {
+  try {
+    req.session.destroy((err) => {
+      if (err) {
+        console.error("Ошибка при выходе пользователя:", err);
+        return res.status(500).send("Ошибка при выходе пользователя");
+      }
+      res.redirect("/home");
+    });
+  } catch (error) {
+    console.error("Ошибка при выходе пользователя:", error);
+    res.status(500).send("Ошибка при выходе пользователя");
   }
 });
 

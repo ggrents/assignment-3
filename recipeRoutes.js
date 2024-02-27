@@ -24,4 +24,37 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/:recipeId/update", async (req, res) => {
+  const recipeId = req.params.recipeId;
+  const { editTitle, editIngredients, editServings, editInstructions } =
+    req.body;
+
+  try {
+    const currentDate = new Date();
+    await Recipe.findByIdAndUpdate(recipeId, {
+      title: editTitle,
+      ingredients: editIngredients,
+      servings: editServings,
+      instructions: editInstructions,
+      updatedAt: currentDate,
+    });
+    res.redirect("/profile");
+  } catch (error) {
+    console.error("Ошибка при обновлении рецепта:", error);
+    res.status(500).send("Ошибка при обновлении рецепта");
+  }
+});
+
+router.post("/:recipeId/delete", async (req, res) => {
+  const recipeId = req.params.recipeId;
+
+  try {
+    await Recipe.findByIdAndDelete(recipeId);
+    res.redirect("/profile");
+  } catch (error) {
+    console.error("Ошибка при удалении рецепта:", error);
+    res.status(500).send("Ошибка при удалении рецепта");
+  }
+});
+
 module.exports = router;

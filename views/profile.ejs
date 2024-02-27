@@ -43,7 +43,6 @@
         margin-top: 5%;
         height: 100%;
         display: flex;
-        flex-direction: column;
       }
 
       input {
@@ -147,7 +146,12 @@
         gap: 15px;
       }
       main {
-        position: relative;
+        margin: 10px;
+        display: flex;
+        /* align-items: center; */
+        gap: 30px;
+        justify-content: center;
+        flex-wrap: wrap;
       }
       .recipe {
         margin-bottom: 20px;
@@ -155,6 +159,7 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         background-color: #f9f9f9;
+        width: 40%;
       }
       .recipe:last-child {
         margin-bottom: 100px;
@@ -168,6 +173,7 @@
         display: flex;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
+        margin-bottom: 20px;
       }
 
       .slide {
@@ -177,6 +183,7 @@
         margin-right: 10px;
         scroll-snap-align: start;
         display: none;
+        margin-bottom: 20px;
       }
 
       .slide:last-child {
@@ -191,13 +198,15 @@
       button {
         color: #001e2b;
         background-color: #00ed64;
-        width: 100px;
+        width: 150px;
         font-size: 1rem;
         cursor: pointer;
         font-family: "Montserrat", sans-serif;
         font-weight: 400;
       }
-
+      p {
+        margin-bottom: 5px;
+      }
       button:hover {
         background-color: #ddd;
       }
@@ -238,12 +247,12 @@
           </div>
           <button class="prev" onclick="prevSlide(this)">❮</button>
           <button class="next" onclick="nextSlide(this)">❯</button>
-          <p>Ingredients: <%= recipe.ingredients %></p>
+          <p style="margin-top: 20px">Ingredients: <%= recipe.ingredients %></p>
           <p>Servings: <%= recipe.servings %></p>
           <p>Instructions: <%= recipe.instructions %></p>
 
           <div id="editForm<%= recipe._id %>" class="edit-form">
-            <form action="/recipes/<%= recipe._id %>" method="post">
+            <form action="/recipes/<%= recipe._id %>/update" method="post">
               <div class="field">
                 <label for="editTitle<%= recipe._id %>">Title</label> <br />
                 <input
@@ -292,9 +301,9 @@
               </div>
               <br />
               <button type="submit">Save Changes</button>
-              <button onclick="deleteRecipe('<%= recipe._id %>')">
-                Delete
-              </button>
+              <form action="/profile/<%= recipe._id %>/delete" method="post">
+                <button type="submit">Delete</button>
+              </form>
             </form>
           </div>
         </div>
