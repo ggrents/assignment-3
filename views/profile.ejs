@@ -62,6 +62,7 @@
         position: absolute;
         bottom: 0;
         width: 100%;
+        margin-top: 100px;
       }
       a {
         text-decoration: none;
@@ -148,12 +149,60 @@
       main {
         position: relative;
       }
-      img {
-        position: absolute;
-        right: 0;
-        top: 80px;
-        width: 500px;
-        height: auto;
+      .recipe {
+        margin-bottom: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+      }
+      .recipe:last-child {
+        margin-bottom: 100px;
+      }
+      .recipe h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .slider {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+      }
+
+      .slide {
+        flex: 0 0 auto;
+        width: 300px;
+        height: 200px;
+        margin-right: 10px;
+        scroll-snap-align: start;
+        display: none;
+      }
+
+      .slide:last-child {
+        margin-right: 0;
+      }
+
+      .slide.active {
+        border: 2px solid blue;
+        display: block;
+      }
+
+      button {
+        color: #001e2b;
+        background-color: #00ed64;
+        width: 100px;
+        font-size: 1rem;
+        cursor: pointer;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 400;
+      }
+
+      button:hover {
+        background-color: #ddd;
+      }
+      form {
+        margin-top: 50px;
       }
     </style>
   </head>
@@ -168,17 +217,114 @@
           </div>
 
           <div class="nav-items">
-            <div class="nav-item">Recipes</div>
-            <div class="nav-item">Cocktails</div>
-            <div class="nav-item">Profile</div>
+            <div class="nav-item"><a href="/recipes"> Recipes </a></div>
+            <div class="nav-item"><a href="/cocktails"> Cocktails </a></div>
+            <div class="nav-item"><a href="/profile"> Profile </a></div>
           </div>
         </nav>
       </header>
-      <main></main>
+      <main>
+        <% recipes.forEach(recipe => { %>
+        <div class="recipe">
+          <h2><%= recipe.title %></h2>
+          <div class="slider">
+            <% recipe.images.forEach((image, index) => { %>
+            <img
+              src="<%= image %>"
+              alt="<%= recipe.title %>"
+              class="slide <%= index === 0 ? 'active' : '' %>"
+            />
+            <% }); %>
+          </div>
+          <button class="prev" onclick="prevSlide(this)">❮</button>
+          <button class="next" onclick="nextSlide(this)">❯</button>
+          <p>Ingredients: <%= recipe.ingredients %></p>
+          <p>Servings: <%= recipe.servings %></p>
+          <p>Instructions: <%= recipe.instructions %></p>
+
+          <div id="editForm<%= recipe._id %>" class="edit-form">
+            <form action="/recipes/<%= recipe._id %>" method="post">
+              <div class="field">
+                <label for="editTitle<%= recipe._id %>">Title</label> <br />
+                <input
+                  type="text"
+                  id="editTitle<%= recipe._id %>"
+                  name="editTitle"
+                  placeholder="Enter recipe title"
+                />
+                <br />
+              </div>
+              <div class="field">
+                <label for="editIngredients<%= recipe._id %>"
+                  >Ingredients</label
+                >
+                <br />
+                <textarea
+                  id="editIngredients<%= recipe._id %>"
+                  name="editIngredients"
+                  placeholder="Enter recipe ingredients"
+                  rows="4"
+                  cols="50"
+                ></textarea>
+              </div>
+              <div class="field">
+                <label for="editServings<%= recipe._id %>">Servings</label>
+                <br />
+                <input
+                  type="text"
+                  id="editServings<%= recipe._id %>"
+                  name="editServings"
+                  placeholder="Enter number of servings"
+                />
+              </div>
+              <div class="field">
+                <label for="editInstructions<%= recipe._id %>"
+                  >Instructions</label
+                >
+                <br />
+                <textarea
+                  id="editInstructions<%= recipe._id %>"
+                  name="editInstructions"
+                  placeholder="Enter recipe instructions"
+                  rows="4"
+                  cols="50"
+                ></textarea>
+              </div>
+              <br />
+              <button type="submit">Save Changes</button>
+              <button onclick="deleteRecipe('<%= recipe._id %>')">
+                Delete
+              </button>
+            </form>
+          </div>
+        </div>
+        <% }); %>
+      </main>
       <footer>
         <h2>Artem Grents</h2>
         <h3>SE-2205</h3>
       </footer>
     </div>
+    <script>
+      function prevSlide(button) {
+        const slider = button.parentElement.querySelector(".slider");
+        const slides = slider.querySelectorAll(".slide");
+        const currentSlide = slider.querySelector(".active");
+        const currentIndex = Array.from(slides).indexOf(currentSlide);
+        const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+        currentSlide.classList.remove("active");
+        slides[prevIndex].classList.add("active");
+      }
+
+      function nextSlide(button) {
+        const slider = button.parentElement.querySelector(".slider");
+        const slides = slider.querySelectorAll(".slide");
+        const currentSlide = slider.querySelector(".active");
+        const currentIndex = Array.from(slides).indexOf(currentSlide);
+        const nextIndex = (currentIndex + 1) % slides.length;
+        currentSlide.classList.remove("active");
+        slides[nextIndex].classList.add("active");
+      }
+    </script>
   </body>
 </html>

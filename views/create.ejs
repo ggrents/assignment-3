@@ -18,7 +18,7 @@
       href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
-    <title>Login</title>
+    <title>Add recipe</title>
     <style>
       html,
       body {
@@ -87,6 +87,7 @@
         cursor: pointer;
         font-family: "Montserrat", sans-serif;
         font-weight: 400;
+        margin-bottom: 100px;
       }
       nav {
         margin: 0 20px 0 20px;
@@ -135,9 +136,9 @@
           </div>
 
           <div class="nav-items">
-            <div class="nav-item">Recipes</div>
-            <div class="nav-item">Cocktails</div>
-            <div class="nav-item">Profile</div>
+            <div class="nav-item"><a href="/recipes"> Recipes </a></div>
+            <div class="nav-item"><a href="/cocktails"> Cocktails </a></div>
+            <div class="nav-item"><a href="/profile"> Profile </a></div>
           </div>
         </nav>
       </header>
@@ -180,6 +181,16 @@
               name="instructions"
               placeholder="Enter recipe instructions"
               rows="4"
+              cols="50"
+            ></textarea>
+          </div>
+          <div class="field">
+            <label for="images">Image URLs (separated by commas)</label> <br />
+            <textarea
+              id="images"
+              name="images"
+              placeholder="Enter image URLs separated by commas"
+              rows="2"
               cols="50"
             ></textarea>
           </div>

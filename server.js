@@ -8,6 +8,7 @@ const adminRoutes = require("./adminRoutes");
 const recipeRoutes = require("./recipeRoutes");
 const request = require("request");
 const path = require("path");
+const Recipe = require("./entities/recipe.js");
 
 const app = express();
 app.use(
@@ -46,10 +47,45 @@ app.get("/", (req, res) => {
   res.redirect("/home");
 });
 
-app.get("/profile", (req, res) => {
-  res.render("profile");
+app.get("/profile", async (req, res) => {
+  try {
+    const recipes = await Recipe.find({});
+
+    res.render("profile", { recipes: recipes });
+  } catch (error) {
+    console.error("Error fetching recipes:", error);
+    res.status(500).json({ error: "Error fetching recipes" });
+  }
 });
 
+app.get("/recipes", (req, res) => {
+  const apiKey = "bG/ihNFebjjUh5fQeZseCw==OFnRunQwztiKgww2";
+
+  const searchQuery = req.query.query;
+
+  if (!searchQuery) {
+    res.render("recipes", { recipes: [] });
+  } else {
+    const url = `https://api.api-ninjas.com/v1/recipe?query=${searchQuery}`;
+    request.get(
+      {
+        url: url,
+        headers: {
+          "X-Api-Key": apiKey,
+        },
+      },
+      function (error, response, body) {
+        if (error) {
+          console.error("Request failed:", error);
+          // res.redirect("/recipes");
+        } else {
+          const recipes = JSON.parse(body);
+          res.render("recipes", { recipes: recipes });
+        }
+      }
+    );
+  }
+});
 app.get("/home", (req, res) => {
   const isAuth = req.session.username;
   res.render("home", { isAuth });
@@ -66,29 +102,32 @@ app.get("/admin", checkAdmin, async (req, res) => {
   }
 });
 
-app.get("/holidays", (req, res) => {
-  const country = "Kazakhstan";
-  const year = req.query.year || new Date().getFullYear(); // По умолчанию текущий год
+app.get("/cocktails", (req, res) => {
   const apiKey = "bG/ihNFebjjUh5fQeZseCw==OFnRunQwztiKgww2";
-  const url = `https://api.api-ninjas.com/v1/holidays?country=${country}&year=${year}&type=public_holiday`;
+  const searchQuery = req.query.query;
 
-  request.get(
-    {
-      url: url,
-      headers: {
-        "X-Api-Key": apiKey,
+  if (!searchQuery) {
+    res.render("cocktails", { cocktails: [] });
+  } else {
+    const url = `https://api.api-ninjas.com/v1/cocktail?name=${searchQuery}`;
+    request.get(
+      {
+        url: url,
+        headers: {
+          "X-Api-Key": apiKey,
+        },
       },
-    },
-    function (error, response, body) {
-      if (error) {
-        console.error("Request failed:", error);
-        res.status(500).send("Failed to fetch holidays data");
-      } else {
-        const holidays = JSON.parse(body);
-        res.render("holidays", { holidays: holidays });
+      function (error, response, body) {
+        if (error) {
+          console.error("Request failed:", error);
+          res.redirect("/cocktails");
+        } else {
+          const cocktails = JSON.parse(body);
+          res.render("cocktails", { cocktails: cocktails });
+        }
       }
-    }
-  );
+    );
+  }
 });
 
 app.post("/register", async (req, res) => {

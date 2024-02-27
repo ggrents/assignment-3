@@ -2,9 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Recipe = require("./entities/recipe.js");
 
-router.post("", async (req, res) => {
-  const { title, ingredients, servings, instructions } = req.body;
-
+router.post("/", async (req, res) => {
+  const { title, ingredients, servings, instructions, images } = req.body;
   const username = req.session.username;
 
   try {
@@ -14,10 +13,10 @@ router.post("", async (req, res) => {
       ingredients,
       servings,
       instructions,
+      images: images.split(",").map((url) => url.trim()),
     });
 
     await newRecipe.save();
-
     res.redirect("/home");
   } catch (error) {
     console.error("Error adding recipe:", error);
